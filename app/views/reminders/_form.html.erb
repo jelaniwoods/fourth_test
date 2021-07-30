@@ -1,0 +1,73 @@
+<% was_validated = reminder.errors.any? %>
+
+<%= form_with(model: reminder, local: true, novalidate: true, class: "mb-3") do |f| %>
+  <div class="form-group">
+    <% title_class = "form-control" %>
+    <% title_was_invalid = reminder.errors.include?(:title) %>
+
+    <% if was_validated %>
+      <% if title_was_invalid %>
+        <% title_class << " is-invalid" %>
+      <% else %>
+        <% title_class << " is-valid" %>
+      <% end %>
+    <% end %>
+
+    <%= f.label :title %>
+    <%= f.text_field :title, class: title_class, placeholder: "Enter title" %>
+    <% if title_was_invalid %>
+      <% reminder.errors.full_messages_for(:title).each do |message| %>
+        <div class="invalid-feedback d-flex">
+          <%= message %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+  <div class="form-group">
+    <% remind_at_class = "form-control" %>
+    <% remind_at_was_invalid = reminder.errors.include?(:remind_at) %>
+
+    <% if was_validated %>
+      <% if remind_at_was_invalid %>
+        <% remind_at_class << " is-invalid" %>
+      <% else %>
+        <% remind_at_class << " is-valid" %>
+      <% end %>
+    <% end %>
+
+    <%= f.label :remind_at %>
+    <%= f.datetime_select :remind_at, class: remind_at_class, placeholder: "Enter remind at" %>
+    <% if remind_at_was_invalid %>
+      <% reminder.errors.full_messages_for(:remind_at).each do |message| %>
+        <div class="invalid-feedback d-flex">
+          <%= message %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+  <div class="form-check">
+    <% reminder_sent_class = "form-check-input" %>
+    <% reminder_sent_was_invalid = reminder.errors.include?(:reminder_sent) %>
+
+    <% if was_validated %>
+      <% if reminder_sent_was_invalid %>
+        <% reminder_sent_class << " is-invalid" %>
+      <% else %>
+        <% reminder_sent_class << " is-valid" %>
+      <% end %>
+    <% end %>
+
+    <%= f.label :reminder_sent, class: "form-check-label" do %>
+      <%= f.check_box :reminder_sent, class: reminder_sent_class %> Reminder sent
+    <% end %>
+    <% if reminder_sent_was_invalid %>
+      <% reminder.errors.full_messages_for(:reminder_sent).each do |message| %>
+        <div class="invalid-feedback d-flex">
+          <%= message %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+  <%= f.hidden_field :user_id, value: current_user.id %>
+  <%= f.button class: "btn btn-outline-secondary btn-block" %>
+<% end %>

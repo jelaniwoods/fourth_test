@@ -1,0 +1,52 @@
+<div class="card mb-3">
+  <h2 class="card-header h4">
+    Reminder #<%= reminder.id %>
+  </h2>
+
+  <div class="card-body">
+    <dl class="mb-1">
+      <dt>Title</dt>
+      <dd><%= reminder.title %></dd>
+
+      <dt>Remind at</dt>
+      <dd><%= reminder.remind_at %></dd>
+
+      <dt>Reminder sent</dt>
+      <dd><%= reminder.reminder_sent %></dd>
+
+      <dt>User</dt>
+      <dd>
+        <% if @reminder.user.present? %>
+          <%= link_to reminder.user, reminder.user %>
+        <% end %>
+      </dd>
+
+    </dl>
+
+    <div class="row">
+      <div class="col">
+        <%= link_to_show_or_back reminder, '<i class="fas fa-search-plus"></i>'.html_safe, '<i class="fas fa-chevron-left"></i>'.html_safe, class: "btn btn-block btn-outline-secondary" %>
+      </div>
+
+      <div class="col">
+        <% if current_user == @reminder.user %>
+          <%= link_to edit_reminder_url(reminder), class: "btn btn-block btn-sm btn-outline-secondary" do %>
+            <i class="fas fa-edit"></i>
+          <% end %>
+        <% end %>
+      </div>
+
+      <div class="col">
+        <% if current_user == @reminder.user %>
+          <%= link_to reminder, method: :delete, data: { confirm: "Do you really want to delete this reminder?" }, class: "btn btn-block btn-outline-secondary" do %>
+            <i class="fas fa-trash-alt"></i>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-footer text-muted">
+    Last updated <%= time_ago_in_words(reminder.updated_at) %> ago
+  </div>
+</div>

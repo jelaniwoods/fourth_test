@@ -1,0 +1,21 @@
+<%= form_with(model: @reminder, local: true) do |f| %>
+
+  <div class="form-group">
+    <%= f.label :title %>
+    <%= f.text_field :title, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :remind_at %>
+    <%= f.text_field :remind_at, class: "form-control" %>
+  </div>
+
+  <div class="form-check">
+    <%= f.check_box :reminder_sent, class: "form-check-input" %>
+    <%= f.label :reminder_sent, class: "form-check-label" %>
+  </div>
+
+  <%= f.hidden_field :user_id, value: @user.id %>
+
+  <%= f.submit "Create reminder", class: "btn btn-block btn-outline-secondary" %>
+<% end %>
